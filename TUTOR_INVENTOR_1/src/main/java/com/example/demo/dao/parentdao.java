@@ -1,0 +1,88 @@
+package com.example.demo.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+import com.example.demo.model.parentreg;
+import com.example.demo.repo.parent_reg_repo;
+import com.example.demo.repo.tutor_repo;
+import com.example.demo.service.parent_reg_ser;
+
+@Service
+
+public class parentdao implements parent_reg_ser
+{
+
+	@Autowired
+	parent_reg_repo sr;
+	
+	@Autowired
+	tutor_repo ss;
+
+	@Override
+	public void reg_info(parentreg s)  {
+		  
+		sr.save(s);
+		
+	}
+//when username and password same then login
+	@Override
+	public parentreg login(String email, String pass) {
+		parentreg parent= sr.findByEmail(email);
+		if(parent==null ||!parent.getPass().equals(pass)) {
+			throw new IllegalArgumentException("Invalid account number or password");
+		}
+		return parent;
+	}
+	
+	
+	@Override
+	public void savededitparent(parentreg t) {
+		sr.save(t);
+		
+	}
+	@Override
+	public parentreg edit_parent(Integer id) {
+		parentreg parent=sr.getById(id);
+		return parent;
+	}
+	@Override
+	public void delete_parent(Integer id) {
+		sr.deleteById(id);
+	}
+	@Override
+	public parentreg password_parentfind(String email) {
+		parentreg s= sr.findByEmail(email);
+		if (s==null) {
+			throw new IllegalArgumentException("invalid");
+			
+		}
+			return s;
+		}
+	@Override
+	public long totalparent() {
+		// TODO Auto-generated method stub
+		return sr.count();
+	}
+	@Override
+	public List<parentreg> allparent(parentreg pp) {
+		// TODO Auto-generated method stub
+		return sr.findAll();
+	}
+	@Override
+	public parentreg edit_parentprofile(String email) {
+		parentreg parent=sr.findByEmail(email);
+		return parent;
+		
+	}
+	
+	
+	 
+	
+	
+}
+
+	
+
+

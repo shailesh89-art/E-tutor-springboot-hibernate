@@ -1,0 +1,33 @@
+package com.example.demo.service;
+
+import java.util.List;
+
+import com.example.demo.model.parentreg;
+
+public interface parent_reg_ser {
+	
+	void reg_info(parentreg s);
+	//when username and password same then login
+	parentreg login(String email, String pass);
+	
+	
+	
+	void savededitparent(parentreg t);
+	parentreg edit_parent(Integer id);
+	void delete_parent(Integer id);
+	parentreg password_parentfind(String email);
+	long totalparent();
+	List<parentreg> allparent(parentreg pp);
+	parentreg edit_parentprofile(String email);
+	
+	
+	
+	
+	
+	
+	
+
+	
+
+	
+}

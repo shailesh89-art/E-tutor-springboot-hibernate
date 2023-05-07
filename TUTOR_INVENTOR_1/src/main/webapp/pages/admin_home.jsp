@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link rel="icon" type="image/x-icon" href="Assets/imgs/Screenshot_(160)-transformed (1)-fotor-bg-remover-20230423203452.png" >
+  <title>Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+ 
+  <style>
+  #logo{
+        width: 10%;
+      }
+      @media only screen and (max-width:767px){
+    
+   
+     #logo{
+        width: 19%;
+      }
+     
+}
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+    <img  id="logo" src="Assets/imgs/Screenshot_(160)-transformed (1)-fotor-bg-remover-20230423203452.png" alt="">
+    </div>
+    <ul class="nav navbar-nav ">
+      <li class="active"><a href="#">Dashboard</a></li>
+      <li><a href="tutor_admin">Tutor</a></li>
+      <li><a href="parent_Admin_edit">Parent</a></li>
+      <li><a href="add_book">Ebooks</a></li>
+        <li><a href="/admin_logout">Sign Out</a></li>
+    </ul>
+  </div>
+  
+  <div class="jumbotron text-center">
+  <h2 class="btn btn-primary" >Total Parent: ${totalparent}</h2><br><br><br><br><br><br>
+  <h2 class="btn btn-warning">Total Tutor: ${totaltutor}</h2><br><br><br><br><br><br>
+  <h2 class="btn btn-success">Total Book: ${totalebook}</h2><br><br><br><br><br><br>
+  
+  
+  
+  
+ 
+ 
+  
+</div>
+</nav>
+
+
+
+
+</body>
+
+</html>
+    

@@ -1,0 +1,465 @@
+package com.example.demo;
+
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.util.List;
+import java.util.Objects;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.example.demo.adminService.AdminService;
+import com.example.demo.adminService.statusService;
+import com.example.demo.adminmodel.Admin;
+import com.example.demo.model.Cust;
+import com.example.demo.model.cust_apply;
+import com.example.demo.service.CustService;
+import com.example.demo.service.cust_apply_Service;
+import com.example.demo.adminmodel.status;
+
+
+
+@Controller
+public class HomeController {
+
+	@Autowired
+	CustService cs;
+	
+	@Autowired
+	AdminService as;
+	
+	@Autowired
+	statusService ss;
+	
+	@Autowired
+	cust_apply_Service cas;
+	
+	
+	@GetMapping("/")
+	public String index()
+	{
+		return "index";
+	}
+	@GetMapping("/about")
+	public String about()
+	{
+		return "about";
+		
+	}
+	@GetMapping("/index")
+	public String home()
+	{
+		return "index";
+		
+	}
+	@GetMapping("/service")
+	public String service()
+	{
+		return "service";
+		
+	}
+	@GetMapping("/contact")
+	public String contact()
+	{
+		return "contact";
+		
+	}
+	
+	
+	@GetMapping("/farmloan")
+	public String farm()
+	{
+		return "farmloan";
+	}
+	
+	@GetMapping("/vehicle")
+	public String vehicle()
+	{
+		return "vehicle_loan";
+	}
+	
+	
+	
+	@GetMapping("/cust_signup")
+	public String signup()
+	{
+		return "cust_signup";
+	}
+	
+	@PostMapping("/cust_reg")
+	public  String insert(@ModelAttribute("c1") Cust c1)
+		{
+		if(c1.getPass().equals(c1.getConf_pass())) 
+		{
+			  cs.getinfo(c1);
+				return "redirect:/cust_login";
+
+		}
+		else
+		{
+			    throw new IllegalArgumentException("Password and Confirm Password do not match");
+
+		}
+		}	
+	
+	@GetMapping("/business")
+	public String busi()
+	{
+		return "business";
+	}
+	
+	@GetMapping("/cust_login")
+	public String login()
+	{
+		return "cust_login";
+	} 
+	
+	@PostMapping("/loginvalidater")
+	public String logincust(@ModelAttribute("c1") Cust c1,HttpSession session)
+	{
+		
+		String email=c1.getEmail();
+		String pass= c1.getPass();
+		Object logi=cs.check_login(email,pass);
+		 
+		if(Objects.nonNull(logi))
+		{
+			session.setAttribute("customer",c1.getEmail());
+			session.setAttribute("cust",c1.getId());
+			
+			//session.setAttribute("c1",c1.getName());
+                return "redirect:/cust_home" ;
+		}
+		  else 
+		{
+			return"cust_login";
+		} 
+		
+	}
+	
+	@RequestMapping("/cust_home")
+	public String home1(HttpSession session)
+	{
+		if(session.getAttribute("customer") ==null) {
+			
+			return "redirect:/cust_login";
+					
+		}
+		return "cust_home";
+		 
+	}
+	
+	
+	@RequestMapping("/calculater")
+	public String cal(HttpSession session)
+	{
+          if(session.getAttribute("customer") ==null) {
+			
+			return "redirect:/cust_login";
+					
+		}
+		return "calculater";
+		
+	}
+	
+	@RequestMapping("/cust_logout")
+	public String logout(HttpSession session)
+	{
+		session.removeAttribute("customer");
+		//session.invalidate();
+		return "cust_login";
+			
+	}
+	
+	
+	
+	@RequestMapping("/applyhere")
+	public String apply(HttpSession session)
+	{
+		
+		return "apply";
+		
+	}
+
+	
+	
+	 
+	@PostMapping("/next")
+	public String uplaod1(@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3,@ModelAttribute("c3") cust_apply c3,HttpServletRequest request) {
+		
+		try {
+			String filename=file1.getOriginalFilename();
+			String path = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+			byte []filedata=file1.getBytes();
+			
+			String filename1=file2.getOriginalFilename();
+			String path1 = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+			byte []filedata1=file2.getBytes();
+			
+			String filename2=file3.getOriginalFilename();
+			String path2 = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+			byte []filedata2=file3.getBytes();
+			BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+			BufferedOutputStream bout1 = new BufferedOutputStream(new FileOutputStream(path1 + "/" + filename1));
+			BufferedOutputStream bout2 = new BufferedOutputStream(new FileOutputStream(path2 + "/" + filename2));
+			bout.write(filedata);
+			bout.flush();
+			bout.close();
+			bout1.write(filedata1);
+			bout2.write(filedata2);
+			c3.setPancard(filename);
+			c3.setAddharcard(filename1);
+		    c3.setPhoto(filename2);
+			
+		/*	
+			HttpSession s1 = request.getSession();
+		    
+			s1.setAttribute("a1",c3.getEmail());
+			s1.setAttribute("a3",c3.getName());
+			s1.setAttribute("a4",c3.getAddress());
+			s1.setAttribute("a5",c3.getPnumber());
+			s1.setAttribute("a6",c3.getLoantenure());
+			s1.setAttribute("a7",c3.getLoanamt());
+			s1.setAttribute("a8",c3.getIntrate());
+			s1.setAttribute("a9",c3.getPfees());
+			s1.setAttribute("a10",c3.getFinalamount());
+			s1.setAttribute("a11",c3.getChoice());
+			s1.setAttribute("a12",c3.getLoanchoice());*/
+			
+			cs.upload(c3);
+			 
+			return "redirect:/cust_home";
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "Error uploading file: " + e.getMessage();
+		}
+		
+		 
+	}	
+	
+	@RequestMapping("/cust_applied_loan")
+	public String loan(ModelMap m)
+	{
+		List<status> p2 = cas.getstatus();
+		m.addAttribute("p2",p2);
+		return "cust_applied_loan";
+		
+	}
+	
+	
+ 
+
+	
+	
+	
+////////////////////////////////////////////////////////////Admin//////////////////////////////////////////////////////////
+
+	//Admin Login Mapping
+ 	@RequestMapping("/adminlogin")
+	public String admin()
+	{
+		return "adminlogin";
+		
+	}
+ 	
+ 	 @PostMapping("/admin_login")
+ 	 public String adminlog(@RequestParam ("username") String username,@RequestParam("password") String password ,HttpSession session)
+ 	 {
+ 		 if(username.equals("admin@gmail.com") && password.equals("admin@123")) 
+ 		 {
+ 			 session.setAttribute("username",username);
+ 			 return "redirect:/admin_dashboard";
+ 		 }
+ 		
+ 			return "adminlogin";
+ 
+ 	 }
+ 	 @RequestMapping("/logoutadmin")
+ 	 public String logoutadmin(HttpSession session)
+ 	 {
+ 		 session.getAttribute("username");
+ 		 session.invalidate();
+		return "adminlogin";
+ 		 
+ 	 }
+ 	@RequestMapping("/admin_dashboard")
+ 	public String dash(HttpSession session)
+ 	{
+if(session.getAttribute("username") ==null) {
+			
+			return "redirect:/adminlogin";
+			}
+ 		return "admin_dashboard";
+ 	}
+ 
+
+//Add member Mapping
+@RequestMapping("/add_member")
+public String addmem()
+{
+	return "add_member";
+	 
+}
+
+@PostMapping("/addmember")
+public String uplaod2(@RequestParam("file1") MultipartFile file1,@RequestParam("file2") MultipartFile file2,@RequestParam("file3") MultipartFile file3,@ModelAttribute("c3") cust_apply c3) {
+	
+	try {
+		String filename=file1.getOriginalFilename();
+		String path = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+		byte []filedata=file1.getBytes();
+		
+		String filename1=file2.getOriginalFilename();
+		String path1 = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+		byte []filedata1=file2.getBytes();
+		
+		String filename2=file3.getOriginalFilename();
+		String path2 = "C:\\Users\\HP\\Downloads\\nbfc_online\\online_NBFC\\src\\main\\resources\\static\\fileuploadimg";
+		byte []filedata2=file3.getBytes();
+		BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path + "/" + filename));
+		BufferedOutputStream bout1 = new BufferedOutputStream(new FileOutputStream(path1 + "/" + filename1));
+		BufferedOutputStream bout2 = new BufferedOutputStream(new FileOutputStream(path2 + "/" + filename2));
+		bout.write(filedata);
+		bout.flush();
+		bout.close();
+		bout1.write(filedata1);
+		bout2.write(filedata2);
+		c3.setPancard(filename);
+		c3.setAddharcard(filename1);
+	    c3.setPhoto(filename2);
+		cs.upload(c3); 
+		 
+		return "redirect:/admin_dashboard";
+		
+		
+	} catch (Exception e) {
+		// TODO: handle exception
+		e.printStackTrace();
+		return "Error uploading file: " + e.getMessage();
+	}
+	
+	 
+}	
+     @GetMapping("/viewMember")
+public String view(ModelMap m)
+{
+	List <cust_apply> l1=as.getallcust();
+	m.addAttribute("l1",l1);
+	return "viewMember";
+	
+}
+     
+     //view the database file 
+     
+     @RequestMapping("/viewfile")
+     public String viewfile(@RequestParam("id") int id,ModelMap p)
+     {
+    	cust_apply ca= as.getsinglefile(id);
+    	 p.addAttribute("user",ca);
+		return "viewfile";
+    	 
+     }
+     
+     @PostMapping("/viewfile")
+     public String status(@ModelAttribute("s1") status s1)
+     {
+    	
+    			 
+    		    ss.getstatus(s1);
+    			return "redirect:/admin_dashboard";
+    			
+    			
+    		
+    		 
+    
+    	 
+     }
+
+     @GetMapping("/statusfile")
+     public String getstatus(ModelMap m)
+     {
+     	List <status> p1=ss.getallstatus();
+     	m.addAttribute("p1",p1);
+     	return "statusfile";
+     		
+     }
+     
+     @RequestMapping("/update_status")
+     public String update(@RequestParam("id") int id,ModelMap e)
+     {
+    	status st = ss.getsinglestatus(id);
+    	 e.addAttribute("cust",st);
+		return "update_status";
+    	 
+     }
+     @PostMapping("/update_status")
+     public String update_status(@ModelAttribute("status") status status)
+     {
+    	 
+    	/* status s1 = new status();
+    	 s1.setId(status.getId());
+    	 s1.setName(status.getName());
+    	 s1.setEmail(status.getEmail());
+    	 s1.setAddress(status.getAddress());
+    	 s1.setPnumber(status.getPnumber());
+    	 s1.setLoantenure(status.getLoantenure());
+    	 s1.setLoanamt(status.getLoanamt());
+    	 s1.setIntrate(status.getIntrate());
+    	 s1.setPfees(status.getPfees());
+    	 s1.setFinalamount(status.getFinalamount());
+    	 s1.setChoice(status.getChoice());
+    	 s1.setLoanchoice(status.getLoanchoice());
+    	 s1.setStatus(status.getStatus());
+    	 s1.setMessage(status.getMessage());*/
+    	 ss.updatestatus(status); 
+		return "redirect:/admin_dashboard";
+    	 
+     } 
+     
+    
+
+/*
+  
+
+
+	
+ 
+
+	
+//Dashboard Mapping
+@RequestMapping("/index")
+public String dashboard()
+{
+	return "index";
+	
+}
+
+// Member Mapping
+	@RequestMapping("/cust")
+	public String clogin()
+	{
+		return "login";
+		
+	}
+	
+	*/
+	
+	
+}
+ 

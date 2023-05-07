@@ -1,0 +1,103 @@
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<meta charset="ISO-8859-1">
+<link rel="icon" type="image/x-icon" href="Assets/imgs/Screenshot_(160)-transformed (1)-fotor-bg-remover-20230423203452.png" >
+<title>Welcome Page</title>
+<style>
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+  #logo{
+          width: 4%;
+        }
+@media (max-width: 450px) {
+
+.h-custom {
+height: 100%;
+}
+ #logo{
+        width: 19%;
+    }
+
+}
+</style>
+</head>
+<body>
+
+<br><br><br><br><br>
+<header> <nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <img  id="logo" src="Assets/imgs/Screenshot_(160)-transformed (1)-fotor-bg-remover-20230423203452.png" alt="">
+   
+    
+  
+
+       </nav>
+       </header>
+         
+
+<section class="vh-100">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <form>
+          <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
+            <p class="lead fw-normal mb-0 me-3">Welcome To Tutor Inventor</p>
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-facebook-f"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-twitter"></i>
+            </button>
+
+            <button type="button" class="btn btn-primary btn-floating mx-1">
+              <i class="fab fa-linkedin-in"></i>
+            </button>
+          </div>
+
+         
+
+         
+
+          <div class="d-flex justify-content-between align-items-center">
+            <!-- Checkbox -->
+            <div >
+             
+              <label class="form-check-label" for="form2Example3">
+                Are You Tutor Or Parent?
+              </label>
+            </div>
+           
+          </div>
+
+          <div class="text-center text-lg-start mt-4 pt-2">
+          <a type="submit" class="btn btn-primary" href="login_parent" style="text-decoration: none;">Parent</a><br><br><br><br><br>
+           <a type="submit" class="btn btn-primary" href="login_tutor" style="text-decoration: none;">Tutor</a> 
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+  
+</section>
+</body>
+</html>

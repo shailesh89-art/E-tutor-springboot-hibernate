@@ -1,0 +1,191 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Edit tutor</title>
+
+<style>
+
+.signup-page-background{
+    background-color: aliceblue;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+}
+.signup-page-container{
+    width: 60%;
+    margin: 3rem auto 5rem auto;
+    display: flex;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 10px 10px 25px #d9d7d7;
+}
+.signup-form{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.signup-form h1{
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.input-field{
+    display: flex;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    border-bottom: 1px solid gray;
+    width: 60%;
+}
+.input-field svg{
+    fill: #222;
+}
+.input{
+    border: none;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+}
+
+.invalid-field svg{
+    fill: red;
+}
+.error-message{
+    color: red;
+    margin: 0 auto;
+    text-align: center;
+    padding: 4px 10px;
+    margin-bottom: 1rem;
+    background-color: #f7c5b2;
+    border-radius: 5px;
+}
+.register-btn{
+    width: 60%;
+    border: none;
+    outline: none;
+    padding: 12px;
+    margin: 10px auto;
+    border-radius: 5px;
+    font-weight: bold;
+    background-color: #6dabe4; /*#f5c833;*/
+    color: #fff;
+    cursor: pointer;
+}
+.register-btn:hover{
+    background-color: #4292dc; /*#f5c21b;*/
+}
+.link{
+    text-align: center;
+    color: gray;
+    padding: 0.7rem;
+}
+.image-container{
+    width: 40%;
+    display: flex;
+    align-items: center;
+    /* padding: 1rem; */
+}
+.image-container img{
+    width: 100%;
+    border-radius: 10px;
+    height: 100%;
+}
+
+@media screen and (max-width: 900px){
+    .signup-page-container{
+        width: 80%;
+        justify-content: center;
+    }
+    .signup-form{
+        width: 80%;
+    }
+    .image-container{
+        display: none;
+    }
+}
+
+</style>
+</head>
+<body>
+<form action="ed_tutor" method="post">
+<div class="signup-page-background">
+
+      <div class="signup-page-container">
+        <div class="signup-form">
+        
+        <br> <br> <br> <br> <br> <br>
+      
+          <h1>Tutor Edit</h1>
+          
+          <div class="input-field">
+           <label For='userName' class="label"></label>Id
+          <input class="input" id="userName"  name="id" value="${tutor_ed.id}"  />
+             </div>
+          <div class="input-field">
+            <label For='userName' class="label"></label>Name
+            <input class="input" id="userName"  name="fname" value="${tutor_ed.fname}"  />
+          </div>
+          
+          <div class="input-field">
+            <label For='lastName' class="label"></label>Last Name
+            <input class="input" id="userName"  name="lname" value="${tutor_ed.lname}"  />
+          </div>
+          
+           <div class="input-field">
+            <label For='contact' class="label"></label>Contact
+            <input class="input" id="userName"  name="contact" value="${tutor_ed.contact}" />
+          </div>
+          
+           
+            <div class="input-field">
+            <label For='password' class="label"></label>Password
+            <input id="password" class="input"  type="password"  name="pass" value="${parent_ed.pass}"/>
+          </div>
+          
+          <div class= "input-field ">
+            <label For='email' class="label"></label>Email
+            <input id="email" class="input"  name="email" value="${tutor_ed.email}" />
+          </div>
+          <div class= "input-field ">
+            <label For='state' class="label"></label>State
+            <input id="input" class="input"  name="state" value="${tutor_ed.state}" />
+          </div>
+ 	
+            <div class="input-field">
+            <label For='city' class="label"></label>City
+            <input class="input" id="userName"  name="city" value="${tutor_ed.city}" />
+          </div>
+          
+          <div class="input-field">
+            <label For='info_self' class="label"></label>About
+            <textarea class="input" id="userName"  name="info_self" >${tutor_ed.info_self} </textarea>
+          </div>
+          
+             <div class="input-field">
+            <label For='exp' class="label"></label>Experience
+            <input class="input" id="userName"  name="exp" value="${tutor_ed.exp}" />
+          </div>
+          
+          
+         
+
+        
+          <input type="submit" class="register-btn"  value="Submit"/>
+
+         
+         
+           
+
+        </div>
+        <div class="image-container">
+          <img src="Assets/imgs/registration-transformed.png" alt="sign-up" />
+        </div>
+      </div>
+    </div>
+
+</form>
+</body>
+</html>
